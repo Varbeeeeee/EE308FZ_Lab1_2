@@ -14,29 +14,37 @@ string keyword[32]={
 };
 
 int main(){
+	string filename;
+	cout <<"Enter the filename:";
+	cin >> filename;
+	int level;
+	cout << "Enter the level:";
+	cin >> level;
+	
 	ifstream fin;
-	fin.open("lab1.cpp");
+	fin.open(filename.c_str());
 	string line;
 	string arr[500];
 	int totalnum=0;
+	int n=0;
 	while(getline(fin,line))				//Changes the contents of a file to a string
     {
         int i=0,j=0;
         string str;
-        int n=0;
         int flag[500];
-        for(i=0;i<int(line.length());i++)
+        
+        for(i = 0;i < int(line.length());i++)
         {
-            if(line[i]>='a'&&line[i]<='z')	//Prevents the effect of Spaces and symbols
+            if(line[i] >= 'a' && line[i] <= 'z')	//Prevents the effect of Spaces and symbols
             {
-                for(j=i;line[j]>='a'&&line[j]<='z';j++);
+                for(j = i;line[j] >= 'a' && line[j] <= 'z';j++);
                 str=line.substr(i,j-i);
                 arr[n]=str;                
                 n++;
                 
-                for(int k=0;k<32;k++)
+                for(int k = 0;k < 32;k++)
                 {
-                    if(str==keyword[k])
+                    if(str == keyword[k])
                     {
                         totalnum++;
                         break;
@@ -50,6 +58,45 @@ int main(){
             } 
         }
     }
+    
     cout<<"total num: "<<totalnum<<endl;
+    
+    
+    int switch_num=0;
+    int case_num[500]={0};
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i] == "switch")
+        {
+            switch_num++;
+            for(int j = i+1;j < n;j++)
+            {
+                if(arr[j] == "case")
+                    case_num[switch_num]++;    
+                else if(arr[j] == "switch")
+                {
+                    i=j-1;
+                    break;
+                }                
+            }
+        }
+    }
+    
+   
+    if(level >= 1){
+    	 cout<<"switch num: "<<switch_num<<endl;
+	}
+	
+    if(level >= 2)
+    {
+        cout<<"case num: ";
+        for(int i = 1;i <= switch_num;i++)
+            cout<<case_num[i]<<" ";
+        cout<<endl;
+    }
+    
+    
+    
+    
 }
 
