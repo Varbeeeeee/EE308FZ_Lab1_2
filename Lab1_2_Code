@@ -22,7 +22,7 @@ int main(){
 	while(getline(fin,line))				//Changes the contents of a file to a string
     {
         int i=0,j=0;
-        string a;
+        string str;
         int n=0;
         int flag[500];
         for(i=0;i<int(line.length());i++)
@@ -30,14 +30,13 @@ int main(){
             if(line[i]>='a'&&line[i]<='z')	//Prevents the effect of Spaces and symbols
             {
                 for(j=i;line[j]>='a'&&line[j]<='z';j++);
-                a=line.substr(i,j-i);
-                arr[n]=a;                
+                str=line.substr(i,j-i);
+                arr[n]=str;                
                 n++;
-                if(arr[n-1]=="else"&&line[j]==' ')
-                    flag[n-1]=1;
+                
                 for(int k=0;k<32;k++)
                 {
-                    if(a==keyword[k])
+                    if(str==keyword[k])
                     {
                         totalnum++;
                         break;
@@ -53,3 +52,4 @@ int main(){
     }
     cout<<"total num: "<<totalnum<<endl;
 }
+
